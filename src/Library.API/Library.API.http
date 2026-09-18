@@ -1,0 +1,90 @@
+@Library.API_HostAddress = http://localhost:5000
+
+### Get all books
+GET {{Library.API_HostAddress}}/api/books
+Accept: application/json
+
+### Get a single book
+GET {{Library.API_HostAddress}}/api/books/1
+Accept: application/json
+
+### Add a new book to the catalog
+POST {{Library.API_HostAddress}}/api/books
+Content-Type: application/json
+
+{
+  "title": "Refactoring",
+  "author": "Martin Fowler",
+  "isbn": "9780134757599",
+  "totalCopies": 2
+}
+
+### Update a book's catalog details
+PUT {{Library.API_HostAddress}}/api/books/1
+Content-Type: application/json
+
+{
+  "title": "Clean Code",
+  "author": "Robert C. Martin",
+  "isbn": "9780132350884",
+  "totalCopies": 4
+}
+
+### Delete a book (fails if any copies are on loan)
+DELETE {{Library.API_HostAddress}}/api/books/2
+
+### Get all members
+GET {{Library.API_HostAddress}}/api/members
+Accept: application/json
+
+### Get a single member
+GET {{Library.API_HostAddress}}/api/members/1
+Accept: application/json
+
+### Register a new member
+POST {{Library.API_HostAddress}}/api/members
+Content-Type: application/json
+
+{
+  "fullName": "Carla Nguyen",
+  "email": "carla.nguyen@example.com"
+}
+
+### Delete a member (fails if they still have books checked out)
+DELETE {{Library.API_HostAddress}}/api/members/2
+
+### Get all loans
+GET {{Library.API_HostAddress}}/api/loans
+Accept: application/json
+
+### Get a single loan
+GET {{Library.API_HostAddress}}/api/loans/1
+Accept: application/json
+
+### Get all currently overdue loans
+GET {{Library.API_HostAddress}}/api/loans/overdue
+Accept: application/json
+
+### Get a member's active (not yet returned) loans
+GET {{Library.API_HostAddress}}/api/loans/member/1/active
+Accept: application/json
+
+### Preview the fine currently accrued on a loan (before returning it)
+GET {{Library.API_HostAddress}}/api/loans/1/fine
+Accept: application/json
+
+### Check out a book to a member
+# Due date is automatically set to checkout date + 14 days.
+# Fails with 400 if: no copies available, member already has 5 active loans,
+# or member already has this exact book checked out.
+POST {{Library.API_HostAddress}}/api/loans/checkout
+Content-Type: application/json
+
+{
+  "memberId": 1,
+  "bookId": 1
+}
+
+### Return a loan
+# Fine is calculated at $0.50/day for every day past the due date.
+POST {{Library.API_HostAddress}}/api/loans/1/return
