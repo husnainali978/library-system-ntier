@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Library.API/Library.API.csproj" />
+    <Project Path="src/Library.BusinessLogic/Library.BusinessLogic.csproj" />
+    <Project Path="src/Library.DataAccess/Library.DataAccess.csproj" />
+    <Project Path="src/Library.Entities/Library.Entities.csproj" />
+  </Folder>
+</Solution>
